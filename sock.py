@@ -17,7 +17,7 @@ def main():
 
 	hostname = socket.gethostname()
 	IP = socket.gethostbyname(hostname)
-	porta = 8003
+	PORTA = 8003
 	
 	PATH_LOG = '/home/cloud/sock/log/'
 	FILE_LOG = 'socket_8003.log'
@@ -37,7 +37,7 @@ def main():
 	try:
 		server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 		server.setblocking(0)
-		server.bind((IP,porta))
+		server.bind((IP,PORTA))
 		server.listen(5)
 
 		logger.info('SOCKET OK' )
@@ -61,7 +61,7 @@ def main():
 
 	while inputs:
 		#print >>sys.stderr, '\nwarning for the next event'
-		readable, writeable, exceptional = select.select(inputs, outputs, inputs)
+		readable, writeable, exceptional = select.select(inputs, outputs, inputs, 20)
 
 		for s in readable:
 			if s is server:
