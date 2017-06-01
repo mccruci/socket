@@ -49,6 +49,6 @@ class Databases(object):
             self.cur.executemany(self.__INSERT_DB, item)
             self.db.commit()
         except MySQLdb.Error, e:
-	    print("ECCEZIONE {0}",format(e))
+	    print("ECCEZIONE {0}, --LISTA-- = {1}".format(e,lista))
             logging.error("SCK::Errore insertDb")
 
