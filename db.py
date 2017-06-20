@@ -44,7 +44,7 @@ class Databases(object):
         """
         item=[]
         for row in lista: #self.listaDiDict:
-            item.append((row['IdRecord'],row['TipoStr'],row['TsDevice'],row['Imei'],row['Latitudine'],row['Longitudine'],row['EstOvest'],row['NordSud'],row['Velocita'],row['CoordNewOld'],row['CoordValida'],row['CaricaBatteria'],row['Future'],row['TsRicezione'],row['FlagRecDuplicato'],row['FlagStrNonValida']))
+            item.append((row['IdRecord'],row['data_ins'],row['TipoStr'],row['TsDevice'],row['Imei'],row['Latitudine'],row['Longitudine'],row['EstOvest'],row['NordSud'],row['Velocita'],row['CoordNewOld'],row['CoordValida'],row['CaricaBatteria'],row['Future'],row['TsRicezione'],row['FlagRecDuplicato'],row['FlagStrNonValida']))
         try:
             self.cur.executemany(self.__INSERT_DB, item)
             self.db.commit()

@@ -27,7 +27,7 @@ class Gestione(object):
         '''
         i = time.time()
         datetime.fromtimestamp(i).strftime("%d%m%y-%H%M%S")
-        :return datatime on format ddmmyy-HHMMSS
+        @return datatime on format ddmmyy-HHMMSS
         '''
         return datetime.fromtimestamp(time.time()).strftime("%d%m%y-%H%M%S")
 
@@ -35,8 +35,8 @@ class Gestione(object):
     def setLista(self,lista):
         '''
         set lista ritornata da mainSTR
-        :param lista:
-        :return:
+        @param lista:
+        @return:
         '''
         self.lista=lista
 
@@ -45,7 +45,10 @@ class Gestione(object):
         set della base per il dataJson, su questa base viene popolato anche il db
         '''
         for s in self.lista:
-            d={'IdRecord': time.time(),
+	    idR = time.time()
+	    data_ins = datetime.datetime.fromtimestamp(idR).strftime('%Y-%m-%d %H:%M:%S')
+            d={'IdRecord': idR,
+	       'data_ins': data_ins,
                'TipoStr':s['flag'],
                'TsDevice':s['data']+'-'+s['orario'],
                'Imei':s['imei'],
@@ -81,22 +84,17 @@ class Gestione(object):
         url = 'http://www.sopla.com/device/api/Device/DevicePosition'
         headers = {'content-type': 'application/json'}
         r = requests.post(url, data=json.dumps(self.playload), headers=headers)
-	#logger.info("JSON::status code {0} - answer string".format(r.status,r.json()))
-	#print("DataJson: {0}".format(self.dataJson))
-	#print("JSON STATUS")
-	#print r.status_code
-	#print r.json()
+		#logger.info("JSON::status code {0} - answer string".format(r.status,r.json()))
+		#print("DataJson: {0}".format(self.dataJson))
+		#print("JSON STATUS")
+		#print r.status_code
+		#print r.json()
         #da verificare la risposta
-
-    #def main(self):
-        #logging.info('SCK:: start Gestione.main')
-        #self.setDataJson()  #setto il campo dataJson con i dati ricevuti
-        #self.setPlayload()  # costruisco il playLoad per il json
 
     def connessioneDB(self):
         '''
         connessione al database
-        :return:
+        @return:
         '''
         #self.db = Databases(self.dataJson)
         self.db = Databases()
@@ -105,21 +103,22 @@ class Gestione(object):
     def run(self,stringaPic,tsRIcezione,db):
         '''
         avvio esecuzione
-        :param stringaPic:
-        :param tsRIcezione:
-        :return:
+        @param stringaPic:
+        @param tsRIcezione:
+		@param db:
+        @return:
         '''
         self.playload = {}
         self.dataJson = []
         self.count = 0
         
-	self.setLista(readSTR(stringaPic, tsRIcezione))
+		self.setLista(readSTR(stringaPic, tsRIcezione))
         self.setDataJson()   #set dati per db e corpo json
         self.setPlayload()   #set playload per json
-	#print("Lista stringhe {0}".format(self.dataJson))
-	#print help(db)
-        #self.db.insertDb()  #insert on db
-	db.insertDb(self.dataJson)
+		#print("Lista stringhe {0}".format(self.dataJson))
+		#print help(db)
+		#self.db.insertDb()  #insert on db
+		db.insertDb(self.dataJson)
         self.sendJson()     #invio i dati a json
 
 
