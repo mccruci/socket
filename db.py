@@ -4,7 +4,7 @@ from ConfigParser import SafeConfigParser
 
 class Databases(object):
 
-    __INSERT_DB="INSERT INTO apparati (idRecord,TipoStr,TsDevice,imei,Latitudine,Longitudine,EstOvest,NordSud,velocita,CoordNewOld,CoordValida,CaricaBatteria,Future,TsRicezione,FlagRecDuplicato,FlagStrNonValida) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    __INSERT_DB="INSERT INTO apparati (dataOra,TipoStr,TsDevice,imei,Latitudine,Longitudine,EstOvest,NordSud,velocita,CoordNewOld,CoordValida,CaricaBatteria,Future,TsRicezione,FlagRecDuplicato,FlagStrNonValida) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
     
     def __init__(self):
         """
@@ -44,7 +44,7 @@ class Databases(object):
         """
         item=[]
         for row in lista: #self.listaDiDict:
-            item.append((row['IdRecord'],row['data_ins'],row['TipoStr'],row['TsDevice'],row['Imei'],row['Latitudine'],row['Longitudine'],row['EstOvest'],row['NordSud'],row['Velocita'],row['CoordNewOld'],row['CoordValida'],row['CaricaBatteria'],row['Future'],row['TsRicezione'],row['FlagRecDuplicato'],row['FlagStrNonValida']))
+            item.append((row['dataOra'],row['TipoStr'],row['TsDevice'],row['Imei'],row['Latitudine'],row['Longitudine'],row['EstOvest'],row['NordSud'],row['Velocita'],row['CoordNewOld'],row['CoordValida'],row['CaricaBatteria'],row['Future'],row['TsRicezione'],row['FlagRecDuplicato'],row['FlagStrNonValida']))
         try:
             self.cur.executemany(self.__INSERT_DB, item)
             self.db.commit()

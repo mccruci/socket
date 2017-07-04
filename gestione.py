@@ -46,10 +46,9 @@ class Gestione(object):
         '''
         for s in self.lista:
 	    idR = time.time()
-	    data_ins = datetime.datetime.fromtimestamp(idR).strftime('%Y-%m-%d %H:%M:%S')
-            d={'IdRecord': idR,
-	       'data_ins': data_ins,
-               'TipoStr':s['flag'],
+	    data_ins = datetime.fromtimestamp(idR).strftime('%Y-%m-%d %H:%M:%S')
+            d={'dataOra': data_ins,
+	       'TipoStr':s['flag'],
                'TsDevice':s['data']+'-'+s['orario'],
                'Imei':s['imei'],
                'Latitudine': s['latitudine'],
@@ -84,11 +83,11 @@ class Gestione(object):
         url = 'http://www.sopla.com/device/api/Device/DevicePosition'
         headers = {'content-type': 'application/json'}
         r = requests.post(url, data=json.dumps(self.playload), headers=headers)
-		#logger.info("JSON::status code {0} - answer string".format(r.status,r.json()))
-		#print("DataJson: {0}".format(self.dataJson))
-		#print("JSON STATUS")
-		#print r.status_code
-		#print r.json()
+	#logger.info("JSON::status code {0} - answer string".format(r.status,r.json()))
+	#print("DataJson: {0}".format(self.dataJson))
+	#print("JSON STATUS")
+	#print r.status_code
+	#print r.json()
         #da verificare la risposta
 
     def connessioneDB(self):
@@ -112,13 +111,13 @@ class Gestione(object):
         self.dataJson = []
         self.count = 0
         
-		self.setLista(readSTR(stringaPic, tsRIcezione))
+	self.setLista(readSTR(stringaPic, tsRIcezione))
         self.setDataJson()   #set dati per db e corpo json
         self.setPlayload()   #set playload per json
-		#print("Lista stringhe {0}".format(self.dataJson))
-		#print help(db)
-		#self.db.insertDb()  #insert on db
-		db.insertDb(self.dataJson)
+	#print("Lista stringhe {0}".format(self.dataJson))
+	#print help(db)
+	#self.db.insertDb()  #insert on db
+	db.insertDb(self.dataJson)
         self.sendJson()     #invio i dati a json
 
 
@@ -126,5 +125,7 @@ if __name__ == '__main__':
     stringaPic='&320021716520412345678901234542.123456E123.123456N12.34NS66666666666'
     tsRIcezione = time.strftime("%d%m%y-%H%M%S")
     ges = Gestione()
-    ges.run(stringaPic,tsRIcezione)
+    db = Databases()
+    db.connetti()
+    ges.run(stringaPic,tsRIcezione,db)
     
