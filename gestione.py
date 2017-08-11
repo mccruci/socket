@@ -99,12 +99,12 @@ class Gestione(object):
         self.db = Databases()
         self.db.connetti()
 
-    def run(self,stringaPic,tsRIcezione,db):
+    def run(self,stringaPic,tsRIcezione):
         '''
         avvio esecuzione
         @param stringaPic:
         @param tsRIcezione:
-		@param db:
+	@param db:
         @return:
         '''
         self.playload = {}
@@ -116,8 +116,8 @@ class Gestione(object):
         self.setPlayload()   #set playload per json
 	#print("Lista stringhe {0}".format(self.dataJson))
 	#print help(db)
-	#self.db.insertDb()  #insert on db
-	db.insertDb(self.dataJson)
+	#db.insertDb()  #insert on db
+	self.db.insertDb(self.dataJson)
         self.sendJson()     #invio i dati a json
 
 

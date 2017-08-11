@@ -25,7 +25,7 @@ class Databases(object):
 
         try:
             self.db = MySQLdb.connect(self.host, self.user, self.passwd, self.dbName)
-            self.cur = self.db.cursor()
+            #self.cur = self.db.cursor()
             logging.info('SCK:: connessione db')
         except MySQLdb.Error, e:
             logging.error("SCK::ERROR connessione db: %s", e)
@@ -33,8 +33,9 @@ class Databases(object):
     def close(self):
 
         try:
+		
             self.cur.close()
-            self.db.close()
+            #self.db.close()
         except MySQLdb.Error, e:
             logging.error("SCK::ERROR close db: %s", e)
 
@@ -46,8 +47,15 @@ class Databases(object):
         for row in lista: #self.listaDiDict:
             item.append((row['dataOra'],row['TipoStr'],row['TsDevice'],row['Imei'],row['Latitudine'],row['Longitudine'],row['EstOvest'],row['NordSud'],row['Velocita'],row['CoordNewOld'],row['CoordValida'],row['CaricaBatteria'],row['Future'],row['TsRicezione'],row['FlagRecDuplicato'],row['FlagStrNonValida']))
         try:
-            self.cur.executemany(self.__INSERT_DB, item)
+            '''
+	    self.cur.executemany(self.__INSERT_DB, item)
             self.db.commit()
+            '''
+	    #verifica per l'errore 2006 mysql
+            cur = self.db.cursor()
+	    cur.executemany(self.__INSERT_DB, item)
+            self.db.commit()
+	    cur.close()
         except MySQLdb.Error, e:
 	    print("ECCEZIONE {0}, --LISTA-- = {1}".format(e,lista))
             logging.error("SCK::Errore insertDb")

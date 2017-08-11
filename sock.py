@@ -52,9 +52,11 @@ def main():
 
 	#inizializo gestione e contestualmente il db, lascio la connessione aperta
 	ges=Gestione()
+	'''
+	sono abilitati dalla gestione
         db = Databases()
         db.connetti()
-
+	'''
 	ges.connessioneDB()
 	tsRIcezione =''
 
@@ -90,7 +92,7 @@ def main():
             				inputs.remove(s)
             				s.close()
             				del message_queues[s]
-            				ges.run(stringaPic,tsRIcezione,db)
+            				ges.run(stringaPic,tsRIcezione,)
 	print("uscita")
 if __name__ == '__main__':
 	main()
