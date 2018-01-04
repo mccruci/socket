@@ -1,5 +1,19 @@
 # socket
 language: python
 database: mysql
+framework: peewee
 
-add port, path on file paramiter.ini
+example paramiter.ini
+
+[server]
+host=
+port=
+path_log=
+file_log=
+
+[database]
+database_host=
+database_user=
+database_password=
+database_name=
+

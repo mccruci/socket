@@ -1,0 +1,8 @@
+# Compiled source #
+.pyc
+
+#paramiter file
+paramiter.ini
+
+#ignore folder
+/log/*
