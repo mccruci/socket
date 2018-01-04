@@ -1,9 +1,13 @@
-# socket
+
+## REQUIREMENTS
+pip install -r requirements.txt
+
+# take data on a socket and push on db with peewee framework
 language: python
 database: mysql
 framework: peewee
 
-example paramiter.ini
+## Example paramiter.ini
 
 [server]
 host=
